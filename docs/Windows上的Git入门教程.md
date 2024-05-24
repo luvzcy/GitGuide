@@ -15,7 +15,22 @@ git init
 这个命令会在当前目录下创建一个空的 Git 仓库。
 
 2. 在本地创建一些文件，可以使用文本编辑器或者其他工具，创建一些文件并保存到 Git 仓库中。
-3. 将文件添加到 Git 仓库中，可以使用以下命令：
+3. Git 2.30 版本及以后引入了一个新的安全特性，用于防止在不受信任的文件系统上执行 Git 操作，因为某些文件系统（如 Windows 上的 FAT32 或 NTFS）不记录文件的所有者信息。
+
+   当 Git 检测到它在一个可能不安全的文件系统中操作时，它会显示这个警告并拒绝继续。在你的例子中，Git 检测到了你的存储库（`K:/learnsplace/my-study/spring-security-oauth-examples`）位于这样的文件系统中。
+
+   为了解决这个问题，你可以按照错误提示中的建议，将你的存储库目录添加到 Git 的安全目录列表中。这可以通过运行以下命令来完成：
+
+   ```
+   git config --global --add safe.directory "本地仓库路径"
+   ```
+
+   这条命令告诉 Git 你的存储库目录是安全的，并允许你在该目录下执行 Git 操作。
+
+   请注意，这个操作需要你有足够的权限来修改全局 Git 配置。如果你没有权限，你可能需要联系你的系统管理员或者使用 `--local` 选项来将目录添加到存储库特定的配置中，但这通常不是推荐的做法，因为它只会在当前存储库中生效。
+
+   如果你确信你的文件系统是安全的，并且你信任你正在操作的存储库，那么添加这个例外通常是安全的。但是，如果你不确定，或者你在一个共享或不受信任的环境中工作，那么你应该谨慎行事，并考虑其他安全措施。
+4. 将文件添加到 Git 仓库中，可以使用以下命令：
 
 ```
 git add .
@@ -23,7 +38,7 @@ git add .
 
 这个命令会将当前目录下所有的修改添加到 Git 仓库中。
 
-4. 提交修改，可以使用以下命令：
+5. 提交修改，可以使用以下命令：
 
 ```
 git commit -m "提交信息"
@@ -31,7 +46,7 @@ git commit -m "提交信息"
 
 这个命令会将修改提交到 Git 仓库中，并且添加提交信息。
 
-5. 在 [GitHub](https://so.csdn.net/so/search?q=GitHub&spm=1001.2101.3001.7020) 或者其他远程仓库中创建一个仓库。
+6. 在 [GitHub](https://so.csdn.net/so/search?q=GitHub&spm=1001.2101.3001.7020) 或者其他远程仓库中创建一个仓库。
 
 我打算将本次git学习做一个知识归档，到时候上传到git来学习，所有就以这个为例。
 
@@ -55,7 +70,7 @@ git commit -m "提交信息"
 
 但我们是要push本地仓库，所以我们直接push就行。
 
-6. 添加一个远程仓库的引用。
+7. 添加一个远程仓库的引用。
 
 ```
 git remote add origin https://github.com/luvzcy/GitGuide.git
@@ -63,7 +78,7 @@ git remote add origin https://github.com/luvzcy/GitGuide.git
 
 这个命令用于添加一个远程仓库的引用。在这个例子中，远程仓库的引用名是 `origin`（这是一个惯例，但你可以使用其他名称），而仓库的 URL 是 `git@github.com:luvzcy/GitGuide.git`，这是一个 SSH 格式的 URL，指向 GitHub 上的 `luvzcy/GitGuide` 仓库。
 
-7. 重命名当前分支。
+8. 重命名当前分支。
 
 ```
 git branch -M main
@@ -73,10 +88,12 @@ git branch -M main
 
 如果你正在初始化一个新的仓库，并且从一开始就将默认分支设置为 `main`，那么这个命令可能不是必需的，除非你想确保分支名是 `main` 而不是从某个模板或早期版本的 Git 自动创建的 `master`。
 
-8. 将本地 `main` 分支的更改推送到远程仓库的 `main` 分支。
+9. 将本地 `main` 分支的更改推送到远程仓库的 `main` 分支。
 
 ```
 git push -u origin main
 ```
 
 `-u` 或 `--set-upstream` 选项将本地分支与远程分支关联起来，这样你就可以在后续的推送和拉取操作中使用简化的命令（例如，只需要 `git pull` 或 `git push` 而不是 `git pull origin main` 或 `git push origin main`）。
+
+#### 结束
