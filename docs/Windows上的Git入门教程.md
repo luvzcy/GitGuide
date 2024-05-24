@@ -58,7 +58,7 @@ git commit -m "提交信息"
 6. 添加一个远程仓库的引用。
 
 ```
-git remote add origin git@github.com:luvzcy/GitGuide.git
+git remote add origin https://github.com/luvzcy/GitGuide.git
 ```
 
 这个命令用于添加一个远程仓库的引用。在这个例子中，远程仓库的引用名是 `origin`（这是一个惯例，但你可以使用其他名称），而仓库的 URL 是 `git@github.com:luvzcy/GitGuide.git`，这是一个 SSH 格式的 URL，指向 GitHub 上的 `luvzcy/GitGuide` 仓库。
